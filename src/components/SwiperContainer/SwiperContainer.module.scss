@@ -1,0 +1,50 @@
+.slider{
+  width: 100%;
+}
+.swiperImage{
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  background-size: cover;
+  background-position:top;
+}
+.swiperImage::before,
+.swiperImage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 1;
+}
+
+.swiperImage::after {
+  right: 0;
+  left: auto;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+}
+.innerSwiper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; // Ensure the inner content is above the gradient overlay
+  color: #fff; // Set the color you prefer for the text
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+
+  h1{
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    user-select: none;
+  }
+
+  a{
+    color: white;
+    font-weight: 900;
+    border-bottom: 2px solid #1DCF65;
+    padding: .5rem 0;
+    margin-left: 2px;
+  }
+}

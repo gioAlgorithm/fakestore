@@ -1,0 +1,316 @@
+.cart{
+    cursor: pointer;
+
+    &:hover .cartMenu{
+        display: flex;
+        flex-direction: column;
+        cursor: default;
+    }
+
+    svg{
+        font-weight: bolder;
+        font-size: 1.4rem;
+        margin-top: 5px;
+        color: black;
+    }
+
+    .quantityCircle{
+        position: absolute;
+        width: 19px;
+        height: 19px;
+        font-size: 0.8rem;
+        padding-bottom: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgb(32, 30, 29);
+        color: white;
+        margin-top: -35px;
+        margin-left: 13px;
+
+    }
+    .cartMenu{
+        display: none;
+        position: absolute;
+        width: 350px;
+        min-height: 200px;
+        background-color: white;
+        margin-left: -320px;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+    .bagItems{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+
+        .totalQuantity{
+            font-weight: 600;
+
+            span{
+                font-weight: bold;
+                margin-right: 5px;
+            }
+        }
+    }
+    .cartCardContainer{
+        position: relative;
+        width: 100%;
+        min-height: 100px;
+        max-height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+        overflow-y: auto;
+
+        .cartEmpty{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            h4{
+                font-weight: 400;
+            }
+        }
+
+        
+        &::-webkit-scrollbar {
+            width: 5px; 
+            margin-block: 3rem;
+            border-radius: 100vw;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border: none;
+            background-color: rgb(52, 50, 49); 
+            border-radius: 4px; 
+            width: 5px;
+            border-radius: 100vw;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: black; 
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: rgb(210, 210, 210); 
+            cursor: pointer;
+        }
+        
+    }
+    .totalPrice{
+        display: flex;
+        justify-content: space-between;
+
+        h4{
+            font-weight: 600;
+        }
+    }
+    .cartButtons{
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+
+        .viewBag{
+            width: 140px;
+            height: 50px;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            font-size: 1rem;
+            font-weight: 400;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            cursor: pointer;
+
+            &:hover{
+                background-color: black;
+                color: white;
+            }
+        }
+        .checkOut{
+            width: 140px;
+            height: 50px;
+            background-color: #1DCF65;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+
+            &:hover{
+                background-color: white;
+                color: #1DCF65;
+                border: 2px solid #1DCF65;
+            }
+        }
+    }
+
+    // cart card css
+    .cartCard{
+        width: 300px;
+        height: 80px;
+        background-color: rgb(240, 240, 240);
+        margin-top: 10px;
+        border-radius: 15px;
+        padding: 10px;
+        display: flex;
+        color: rgb(52, 50, 49);
+
+        .cartCardImage{
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+        }
+        .titleAndPrice{
+            display: flex;
+            flex-direction: column;
+            margin-top: 5px;
+            margin-left: 10px;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .trash{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            margin-left: 250px;
+            border-radius: 50%;
+            cursor: pointer;
+
+            &:hover{
+                background-color: rgb(210, 210, 210);
+            }
+
+            svg{
+                margin-left: 5px;
+                font-size: 1.2rem;
+                margin-top: 6px;
+            }
+        }
+        .cartIncrease{
+            position: absolute;
+            width: 85px;
+            height: 25px;
+            display: flex;
+            border-radius: 30px;
+            margin-left: 190px;
+            margin-top: 35px;
+            border: 2px solid rgb(52, 50, 49);
+            align-items: center;
+
+            .minus{
+                width: 28px;
+                height: 19px;
+                border: none;
+                margin-left: 1px;
+                font-size: 1.5rem;
+                border-bottom-left-radius: 30px;
+                border-top-left-radius: 30px;
+                display: flex;
+                font-weight: 600;
+                color: black;
+                cursor: pointer;
+                
+                &:hover{
+                    color: white;
+                    background-color: black;
+                }
+                
+                span{
+                    margin-left: 10px;
+                    margin-top: -7px;
+                }
+            }
+            .quantity{
+                margin-left: 1px;
+                padding-bottom: 2px;
+                width: 21px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+
+                &:hover .quantityAlert{
+                    display: flex;
+                }
+
+                .quantityAlert{
+                    display: none;
+                    position: absolute;
+                    background-color: white;
+                    width: 110px;
+                    height: 30px;
+                    margin-top: 70px;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 40px;
+                    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                    font-size: 0.9rem;
+                    z-index: 999;
+
+                    &::before{
+                        // layout
+                        content: '';
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        bottom: 100%;
+                        left: 2.7rem; // offset should move with padding of parent
+                        border: .75rem solid transparent;
+                        border-top: none;
+
+                        // looks
+                        border-bottom-color: #fff;
+                        filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+                    }
+                }
+            }
+            .plus{
+                width: 28px;
+                height: 19px;
+                border: none;
+                margin-left: 1px;
+                font-size: 1.5rem;
+                border-bottom-right-radius: 30px;
+                border-top-right-radius: 30px;
+                display: flex;
+                font-weight: 600;
+                color: black;
+                cursor: pointer;
+
+                &:hover{
+                    color: white;
+                    background-color: black;
+                }
+                
+                span{
+                    margin-left: 8px;
+                    margin-top: -5px;
+                }
+            }
+        }
+
+    }  
+}
+
+// responsive design
+@media(max-width: 1000px){
+    .cart{
+        &:hover .cartMenu{
+            display: none;
+        }
+    }
+}

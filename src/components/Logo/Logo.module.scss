@@ -1,0 +1,50 @@
+.backBag{
+    width: 27.09px;
+    height: 23.84px;
+    color: rgb(32, 31, 29);
+    top: 0%;
+    background-color: #1DCF65;
+    position: absolute;
+    border-radius: 0.7px;
+    z-index: 1;
+    filter:drop-shadow(rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px)
+}
+.frontBag{
+    position: absolute;
+    width: 34.18px;
+    height: 28.62px;
+    background: linear-gradient(316.98deg, #52D67A 16.88%, #5AEE87 84.04%);
+    left: -4px;
+    top: 0.1px;
+    transform: perspective(10px) rotateX(5deg);
+    border-radius: 0.7px;
+    z-index: 1;
+    filter:drop-shadow(rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px)
+}
+.halfCircle{
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 1px solid white;
+    border-radius: 50%;
+    /* Halve the circle */
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    /* Rotate the circle */
+    transform: rotate(136deg);
+    margin-left: 7px;
+    margin-top: 5px;
+    z-index: 1;
+}
+.arrowTop{
+    position: absolute;
+    border: solid white;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    margin-left: 22px;
+    margin-top: 10px;
+    z-index: 1;
+}
