@@ -14,7 +14,7 @@ const NavContainer: React.FC<NavContainerProps> = ({children}) => {
   const router = usePathname()
 
   return (
-    <div className={`${style.navbar} ${!isSticky && router === '/' ? style.sticky : ""}`}>
+    <div className={`${style.navbar} ${!isSticky && router != "/cartpage" ? style.sticky : ""}`}>
       {children}
     </div>
   )

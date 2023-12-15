@@ -1,5 +1,6 @@
 import React from 'react'
 import style from "./electronics.module.scss"
+import ElectronicsHeader from './ElectronicsHeader/ElectronicsHeader'
 import ElectronicsContainer from './electronicsContainer'
 import type { Metadata } from 'next'
 
@@ -15,6 +16,7 @@ export default function jewelry() {
 
   return (
     <main className={style.electronics}>
+      <ElectronicsHeader />
       <div className={style.innerMain}>
         <div className={style.categoryName}>
           <h1>Electronics</h1>

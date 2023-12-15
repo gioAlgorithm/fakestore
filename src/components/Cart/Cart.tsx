@@ -88,7 +88,7 @@ export default function Cart() {
       </Link>
       }
       {isClient && quantity != 0 &&
-        <Link href="/cartpage" style={{ userSelect: 'none' }} className={style.quantityCircle}>{quantity}</Link>
+        <Link href="/cartpage" style={!isSticky && router === "/" ? {color: "black", backgroundColor: "white"} : {}} className={style.quantityCircle}>{quantity}</Link>
       }
       {router != "/cartpage" &&
         <div className={style.cartMenu}>

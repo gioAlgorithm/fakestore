@@ -2,6 +2,7 @@ import React from 'react'
 import style from "./jewelry.module.scss"
 import JewelryContainer from './jewelryContainer'
 import type { Metadata } from 'next'
+import JewelryHeader from './JewelryHeader/JewelryHeader'
 
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function jewelry() {
 
   return (
     <main className={style.jewelry}>
+      <JewelryHeader />
       <div className={style.innerMain}>
         <div className={style.categoryName}>
           <h1>Jewelry</h1>

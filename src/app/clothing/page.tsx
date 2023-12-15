@@ -3,6 +3,7 @@ import style from "./clothing.module.scss"
 import MenContainer from './menContainer'
 import WomenContainer from './womenContainer'
 import type { Metadata } from 'next'
+import ClothingHeader from './ClothingHeader/ClothingHeader'
 
 export const metadata: Metadata = {
   title: 'Clothing',
@@ -15,6 +16,7 @@ export default function jewelry() {
 
   return (
     <main className={style.clothing}>
+      <ClothingHeader />
       <div className={style.innerMain}>
         <div className={style.categoryName}>
           <h1>Men&apos;s Clothing</h1>

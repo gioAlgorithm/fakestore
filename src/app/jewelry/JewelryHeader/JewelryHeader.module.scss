@@ -1,0 +1,33 @@
+.jewelryHeader{
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(230, 230, 250);
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .description{
+    width: 40%;
+
+    h1{
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    p{
+      margin-top: 1rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    span{
+      color: #1DCF65;
+    }
+
+  }
+
+  .jewelryImage{
+    width: 600px;
+    height: auto;
+  }
+}
