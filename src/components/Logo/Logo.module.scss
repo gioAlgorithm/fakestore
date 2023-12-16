@@ -6,7 +6,7 @@
     background-color: #1DCF65;
     position: absolute;
     border-radius: 0.7px;
-    z-index: 1;
+    z-index: -1;
     filter:drop-shadow(rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px)
 }
 .frontBag{
@@ -18,7 +18,7 @@
     top: 0.1px;
     transform: perspective(10px) rotateX(5deg);
     border-radius: 0.7px;
-    z-index: 1;
+    z-index: -1;
     filter:drop-shadow(rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px)
 }
 .halfCircle{
@@ -34,7 +34,6 @@
     transform: rotate(136deg);
     margin-left: 7px;
     margin-top: 5px;
-    z-index: 1;
 }
 .arrowTop{
     position: absolute;
@@ -46,5 +45,5 @@
     -webkit-transform: rotate(-135deg);
     margin-left: 22px;
     margin-top: 10px;
-    z-index: 1;
+    
 }
