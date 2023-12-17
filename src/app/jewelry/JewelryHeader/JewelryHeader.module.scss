@@ -18,6 +18,10 @@
       margin-top: 1rem;
       font-size: 1rem;
       line-height: 1.5rem;
+
+      span{
+        color: black;
+      }
     }
 
     span{
@@ -30,6 +34,40 @@
     width: 600px;
     height: auto;
   }
+}
+// animation
+.titleAnimation{
+  opacity: 0;
+  transition: 500ms;
+  transform: translateY(50px);
+  filter:blur(5px);
+}
+.titleAnimation.titleShow{
+  transform: translateY(0);
+  opacity: 1;
+  filter:blur(0)
+}
+.paragraphAnimation{
+  opacity: 0;
+  transition: 500ms;
+  transform: translateX(-50px);
+  filter:blur(5px);
+}
+.paragraphAnimation.paragraphShow{
+  transform: translateX(0);
+  opacity: 1;
+  filter:blur(0)
+}
+.jewelryImage{
+  opacity: 0;
+  transition: 500ms;
+  transform: translateX(-50px);
+  filter:blur(5px);
+}
+.jewelryImage.imageShow{
+  transform: translateX(0);
+  opacity: 1;
+  filter:blur(0)
 }
 
 // responsive
