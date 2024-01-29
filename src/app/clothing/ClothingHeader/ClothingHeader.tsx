@@ -48,7 +48,7 @@ useEffect(() => {
         </p>
       </div>
 
-      <Image alt='clothing' className={style.clothingImage} src={clothingImage.src} width={1116} height={1600} />
+      <Image alt='clothing' className={style.clothingImage} src={clothingImage.src} width={1116} height={1600} priority/>
     </div>
   )
 }

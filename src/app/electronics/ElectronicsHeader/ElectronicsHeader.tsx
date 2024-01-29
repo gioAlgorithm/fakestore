@@ -50,7 +50,7 @@ const ElectronicsHeader = () => {
         </p>
       </div>
       
-      <Image className={style.electronicImage} alt='electronics' src={electronicImage.src} width={600} height={416} />
+      <Image className={style.electronicImage} alt='electronics' src={electronicImage.src} width={600} height={416} priority/>
     </div>
   )
 }

@@ -48,7 +48,7 @@ const JewelryHeader = () => {
         </p>
       </div>
       
-      <Image className={style.jewelryImage} alt='jewelry' src={jewelryImage.src} width={3507} height={2224} />
+      <Image className={style.jewelryImage} alt='jewelry' src={jewelryImage.src} width={600} height={380.484} priority/>
     </div>
   )
 }
