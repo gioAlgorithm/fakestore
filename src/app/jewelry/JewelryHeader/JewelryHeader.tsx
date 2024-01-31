@@ -6,8 +6,15 @@ import jewelryImage from "../../../../public/image/jewelry header.png"
 
 const JewelryHeader = () => {
 
+  // State to track whether the image has loaded
+  const [isImageLoaded, setImageLoaded] = React.useState(false);
+
   // animation
   useEffect(() => {
+
+    // If the image has not loaded yet, exit early
+    if (!isImageLoaded) return;
+
     const elements = document.querySelectorAll(`.${style.titleAnimation}, .${style.paragraphAnimation}, .${style.jewelryImage}`);
     const observer = new IntersectionObserver((entries) => {
       console.log(entries); // Add this line for debugging
@@ -34,7 +41,7 @@ const JewelryHeader = () => {
     });
 
     elements.forEach((element) => observer.observe(element));
-  }, []);
+  }, [isImageLoaded]);
 
   return (
     <div className={style.jewelryHeader}>
@@ -48,7 +55,7 @@ const JewelryHeader = () => {
         </p>
       </div>
       
-      <Image className={style.jewelryImage} alt='jewelry' src={jewelryImage.src} width={600} height={380.484} priority/>
+      <Image className={style.jewelryImage} alt='jewelry' src={jewelryImage.src} width={600} height={380.484} priority onLoad={() => setImageLoaded(true)}/>
     </div>
   )
 }

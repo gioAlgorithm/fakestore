@@ -5,9 +5,15 @@ import style from "./ElectronicsHeader.module.scss"
 import electronicImage from "../../../../public/image/electronics header.png"
 
 const ElectronicsHeader = () => {
+  // State to track whether the image has loaded
+  const [isImageLoaded, setImageLoaded] = React.useState(false);
 
   // animation
   useEffect(() => {
+
+    // If the image has not loaded yet, exit early
+    if (!isImageLoaded) return;
+
     const elements = document.querySelectorAll(`.${style.titleAnimation}, .${style.paragraphAnimation}, .${style.electronicImage}`);
     const observer = new IntersectionObserver((entries) => {
       console.log(entries); // Add this line for debugging
@@ -34,7 +40,7 @@ const ElectronicsHeader = () => {
     });
 
     elements.forEach((element) => observer.observe(element));
-  }, []);
+  }, [isImageLoaded]);
 
 
   return (
@@ -50,7 +56,7 @@ const ElectronicsHeader = () => {
         </p>
       </div>
       
-      <Image className={style.electronicImage} alt='electronics' src={electronicImage.src} width={600} height={416} priority/>
+      <Image className={style.electronicImage} alt='electronics' src={electronicImage.src} width={600} height={416} priority onLoad={() => setImageLoaded(true)}/>
     </div>
   )
 }

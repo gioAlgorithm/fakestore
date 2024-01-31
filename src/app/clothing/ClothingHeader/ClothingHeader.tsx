@@ -1,40 +1,44 @@
 "use client"
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import style from "./ClothingHeader.module.scss"
 import Image from 'next/image'
 import clothingImage from "../../../../public/image/fashion header.png"
 
 const ClothingHeader = () => {
 
-// animation
-useEffect(() => {
-  const elements = document.querySelectorAll(`.${style.titleAnimation}, .${style.paragraphAnimation}, .${style.clothingImage}`);
-  const observer = new IntersectionObserver((entries) => {
-    console.log(entries); // Add this line for debugging
-    entries.forEach((entry) => {
-      if (entry.target.classList.contains(style.titleAnimation)) {
-        // Apply styles or animations for text elements
-        entry.target.classList.toggle(`${style.titleShow}`, entry.isIntersecting);
-        if (entry.isIntersecting) observer.unobserve(entry.target);
+// State to track whether the image has loaded
+const [isImageLoaded, setImageLoaded] = React.useState(false);
 
-      } if(entry.target.classList.contains(style.paragraphAnimation)){
-        
-        entry.target.classList.toggle(`${style.paragraphShow}`, entry.isIntersecting);
-        if (entry.isIntersecting) observer.unobserve(entry.target);
+// Animation
+  useEffect(() => {
+    // If the image has not loaded yet, exit early
+    if (!isImageLoaded) return;
 
-      } else {
-        // Apply styles or animations for other elements (cards)
-        entry.target.classList.toggle(`${style.imageShow}`, entry.isIntersecting);
-        if (entry.isIntersecting) observer.unobserve(entry.target);
-      }
+    const elements = document.querySelectorAll(
+      `.${style.titleAnimation}, .${style.paragraphAnimation}, .${style.clothingImage}`
+    );
+
+    const observer = new IntersectionObserver((entries) => {
+      console.log(entries); // Add this line for debugging
+      entries.forEach((entry) => {
+        if (entry.target.classList.contains(style.titleAnimation)) {
+          entry.target.classList.toggle(`${style.titleShow}`, entry.isIntersecting);
+          if (entry.isIntersecting) observer.unobserve(entry.target);
+        } else if (entry.target.classList.contains(style.paragraphAnimation)) {
+          entry.target.classList.toggle(`${style.paragraphShow}`, entry.isIntersecting);
+          if (entry.isIntersecting) observer.unobserve(entry.target);
+        } else {
+          entry.target.classList.toggle(`${style.imageShow}`, entry.isIntersecting);
+          if (entry.isIntersecting) observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 1,
+      rootMargin: "0px 0px 68px 0px", 
     });
-  }, {
-    threshold: 1,
-    rootMargin: "0px 0px 68px 0px", 
-  });
 
-  elements.forEach((element) => observer.observe(element));
-}, []);
+    elements.forEach((element) => observer.observe(element));
+  }, [isImageLoaded]);
 
   return (
     <div className={style.clothingHeader}>
@@ -48,7 +52,7 @@ useEffect(() => {
         </p>
       </div>
 
-      <Image alt='clothing' className={style.clothingImage} src={clothingImage.src} width={1116} height={1600} priority/>
+      <Image alt='clothing' className={style.clothingImage} src={clothingImage.src} width={1116} height={1600} priority onLoad={() => setImageLoaded(true)}/>
     </div>
   )
 }
