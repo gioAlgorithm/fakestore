@@ -26,7 +26,7 @@ export default function Footer() {
           <AiFillTwitterSquare />
           <AiOutlineInstagram />
         </div>
-        <div className={style.copyright}>Copyright © 2023 Giorgi Machitadze All Rights Reserved.</div>
+        <div className={style.copyright}>Copyright © 2024 Giorgi Machitadze All Rights Reserved.</div>
       </div>
       
     </div>
