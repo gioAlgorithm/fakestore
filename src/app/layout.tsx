@@ -4,7 +4,10 @@ import type { Metadata } from 'next'
 import { Raleway } from 'next/font/google'
 import { CartProvider } from '@/context/CartItems'
 import Footer from '@/components/Footer/Footer'
-import { StyleContext, StyleProvider } from '@/context/StyleContext'
+import { StyleProvider } from '@/context/StyleContext'
+import { SortProvider } from '@/context/SortContext'
+import ResponsiveFooter from '@/components/ResponsiveFooter'
+import ResponsiveSort from '@/components/ResponsiveSort'
 
 const raleway = Raleway({ 
   weight: ['400','600', '800'],
@@ -25,11 +28,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={raleway.className}>
         <CartProvider>
-          <StyleProvider>
-            <Navbar />
-          </StyleProvider>
-          {children}
-          <Footer />
+          <SortProvider>
+            <ResponsiveSort />
+            <StyleProvider>
+              <Navbar />
+              <ResponsiveFooter />
+            </StyleProvider>
+            {children}
+            <Footer />
+          </SortProvider>
         </CartProvider>
       </body>
     </html>

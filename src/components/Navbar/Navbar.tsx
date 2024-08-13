@@ -2,15 +2,14 @@ import React from 'react'
 import style from "./Navbar.module.scss"
 import Logo from '@/components/Logo/Logo'
 import Cart from '@/components/Cart/Cart'
-import Search from '@/components/Search/Search'
+import Search from '../Search'
 import ActiveLink from '@/components/ActiveLink/ActiveLink'
-import { fetchProducts } from '@/app/fetchProducts'
 import NavResponsive from './NavResponsive'
 import NavContainer from './NavContainer'
-
+import { fetchAllProducts } from '@/utils/fetchAllProducts'
 
 export default async function Navbar() {
-  const data = await fetchProducts()
+  const data = await fetchAllProducts()
   
   
 
@@ -32,7 +31,7 @@ export default async function Navbar() {
           <div className={style.cartDiv}>
             <Search data={data} />
           </div>
-          <div className={style.cartDiv}>
+          <div className={`${style.cartDiv} ${style.responsive}`}>
             <Cart />
           </div>
       </div>

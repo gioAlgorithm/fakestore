@@ -1,24 +1,16 @@
-import SwiperContainer from '@/components/SwiperContainer/SwiperContainer'
+import SwiperContainer from '@/components/SwiperContainer';
 import styles from './page.module.scss'
-import ProductContainer from './ProductContainer'
+import { fetchAllProducts } from '@/utils/fetchAllProducts';
+import AllContent from './_components/AllContent/AllContent';
 
 
-
-export default function Home() {
+export default async function Home() {
+  const data = await fetchAllProducts();
 
   return (
     <main className={styles.main}>
       <SwiperContainer />
-      <div className={styles.innerMain}>
-        
-        <div className={styles.categoryName}>
-          <h1>All</h1>
-        </div>
-        <div className={styles.cardContainer}>
-          <ProductContainer />
-        </div>
-      </div>
-      
+      <AllContent data={data} />
     </main>
   )
 }

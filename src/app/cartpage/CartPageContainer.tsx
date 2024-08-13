@@ -1,22 +1,20 @@
-"use client"
-import React, {useContext} from 'react'
-import { CartContext } from '@/context/CartItems'
-import style from "./cartpage.module.scss"
-import { CardProps } from '@/Card/Card';
+"use client";
+import React, { useContext } from "react";
+import { CartContext } from "@/context/CartItems";
+import style from "./cartpage.module.scss";
+import { CardProps } from "@/components/Card/Card";
 import { BsTrash } from "react-icons/bs";
-import Loading from '@/components/Loading/Loading';
-
+import Loading from "@/components/Loading";
 
 export default function CartPageContainer() {
-
   //importing usecontext
-  const {cartItems, setCartItems} = useContext(CartContext)
+  const { cartItems, setCartItems } = useContext(CartContext);
 
   // Function that adds items inside the cart
   const onAdd = (event: React.MouseEvent<HTMLDivElement>, item: CardProps) => {
     event.preventDefault(); // Prevent link navigation
     const exist = cartItems.find((x) => x.id === item.id);
-  
+
     if (exist) {
       if (exist.qty < 11) {
         // Check if the quantity is less than 10 before incrementing
@@ -29,33 +27,37 @@ export default function CartPageContainer() {
     } else {
       setCartItems([...cartItems, { ...item, qty: 1 }]);
     }
-  }
+  };
 
-  // function that removes items 
-  const onRemove = (Data: any) => {
-    const exist = cartItems.find((x)=> x.id === Data.id)
+  // function that removes items
+  const onRemove = (Data: CardProps) => {
+    const exist = cartItems.find((x) => x.id === Data.id);
 
-    if(exist.qty === 1){
-      setCartItems(cartItems.filter((x) => x.id !== Data.id))
+    if (exist.qty === 1) {
+      setCartItems(cartItems.filter((x) => x.id !== Data.id));
     } else {
-      setCartItems(cartItems.map((x)=> x.id === Data.id ? {...exist, qty: exist.qty - 1} : x))
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === Data.id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      );
     }
-  }
-  
+  };
+
   //remove the item no matter qty
   const onTrash = (item: CardProps) => {
     setCartItems(
-      cartItems.map((x) =>
-        x.id === item.id ? { ...x, qty: 0 } : x
-      ).filter((x) => x.qty > 0)
+      cartItems
+        .map((x) => (x.id === item.id ? { ...x, qty: 0 } : x))
+        .filter((x) => x.qty > 0)
     );
-  }
+  };
 
   // alert message when ordering
-  const alertMessage = ()=>{
-    alert("ORDERED!")
-    setCartItems([])
-  }
+  const alertMessage = () => {
+    alert("ORDERED!");
+    setCartItems([]);
+  };
 
   // Calculate the total price of items in the cart
   const calculateTotalPrice = () => {
@@ -83,45 +85,67 @@ export default function CartPageContainer() {
   // Calculate the total price, tax, and total price with tax
   const totalPrice = calculateTotalPrice();
   const tax = calculateTax(parseFloat(totalPrice));
-  const totalPriceWithTax = calculateTotalPriceWithTax(parseFloat(totalPrice), parseFloat(tax));
+  const totalPriceWithTax = calculateTotalPriceWithTax(
+    parseFloat(totalPrice),
+    parseFloat(tax)
+  );
 
-  if(cartItems === undefined){
-    return <Loading />
+  if (cartItems === undefined) {
+    return <Loading />;
   }
 
   return (
     <div className={style.cartPageContainer}>
       <div className={style.cartItemsHolder}>
         {cartItems && cartItems.length > 0 ? (
-          cartItems.map((item)=>{
+          cartItems.map((item) => {
             if (!item || !item.title) {
               return null; // Skip rendering if item or item.title is undefined
             }
 
-            return(
+            return (
               <div key={item.id} className={style.cartCard}>
                 <div className={style.cardInfo}>
-                  <div className={style.cartCardImage} style={{backgroundImage: `url(${item.image})`}}></div>
+                  <div
+                    className={style.cartCardImage}
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  ></div>
                   <div className={style.titleAndPrice}>
                     <h4 className={style.cardTitle}>{item.title}</h4>
                     <h4>${(item.price * item.qty).toFixed(2)}</h4>
                   </div>
                 </div>
                 <div className={style.trashIncrease}>
-                  <div className={style.trash} onClick={()=> onTrash(item)}><BsTrash /></div>
+                  <div className={style.trash} onClick={() => onTrash(item)}>
+                    <BsTrash />
+                  </div>
                   <div className={style.cartIncrease}>
-                    <div className={style.minus} style={{ userSelect: 'none' }} onClick={() => onRemove(item)}><span>-</span></div>
-                    <div className={style.quantity}>{item.qty}<div className={style.quantityAlert}>max item: 11</div></div>
-                    <div className={style.plus} style={{ userSelect: 'none' }} onClick={(event) => onAdd(event, item)}><span>+</span></div>
+                    <div
+                      className={style.minus}
+                      style={{ userSelect: "none" }}
+                      onClick={() => onRemove(item)}
+                    >
+                      <span>-</span>
+                    </div>
+                    <div className={style.quantity}>
+                      {item.qty}
+                      <div className={style.quantityAlert}>max item: 11</div>
+                    </div>
+                    <div
+                      className={style.plus}
+                      style={{ userSelect: "none" }}
+                      onClick={(event) => onAdd(event, item)}
+                    >
+                      <span>+</span>
+                    </div>
                   </div>
                 </div>
-                
               </div>
-            )
-          })) : (
-            <div className={style.emptyCart}>Cart is Empty</div>
-          )
-        }
+            );
+          })
+        ) : (
+          <div className={style.emptyCart}>Cart is Empty</div>
+        )}
       </div>
       <div className={style.checkOut}>
         <div className={style.priceAndTax}>
@@ -140,8 +164,10 @@ export default function CartPageContainer() {
             <h3>${totalPrice}</h3>
           </div>
         </div>
-        <button className={style.orderButton} onClick={alertMessage}>Order</button>
+        <button className={style.orderButton} onClick={alertMessage}>
+          Order
+        </button>
       </div>
     </div>
-  )
+  );
 }

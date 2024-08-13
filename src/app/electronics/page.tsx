@@ -1,9 +1,10 @@
 import React from 'react'
 import style from "./electronics.module.scss"
-import ElectronicsHeader from './ElectronicsHeader/ElectronicsHeader'
-import ElectronicsContainer from './electronicsContainer'
+import ElectronicsHeader from './_components/ElectronicsHeader/ElectronicsHeader'
+import { fetchByCategory } from '@/utils/fetchByCategory'
 import type { Metadata } from 'next'
-
+import ProductContainer from '@/components/ProductContainer'
+import ElectronicContent from './_components/ElectronicContent/ElectronicContent'
 
 export const metadata: Metadata = {
   title: 'Electronics',
@@ -11,20 +12,13 @@ export const metadata: Metadata = {
 }
 
 
-export default function jewelry() {
-  
+export default async function jewelry() {
+  const data = await fetchByCategory(`electronics`);
 
   return (
     <main className={style.electronics}>
       <ElectronicsHeader />
-      <div className={style.innerMain}>
-        <div className={style.categoryName}>
-          <h1>Electronics</h1>
-        </div>
-        <div className={style.cardContainer}>
-          <ElectronicsContainer />
-        </div>
-      </div>
+      <ElectronicContent data={data} />
     </main>
   )
 }

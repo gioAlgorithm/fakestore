@@ -31,13 +31,11 @@ export const CartProvider = ({ children }: ContextProviderProps) => {
   // Initialize cartItems state with an empty array
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
-  const [hideLogo, setHideLogo] = useState(true)
+  const [hideLogo, setHideLogo] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  // You can perform any other client-side initialization or side effects here
 
   return (
     <CartContext.Provider

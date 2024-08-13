@@ -1,0 +1,32 @@
+.main{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #D9D9D9;
+  height: 80px;
+  padding: 10px;
+  padding-top: 0px;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background-color: white;
+  z-index: 102;
+}
+.navigator{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  color: black;
+  font-size: 1.4rem;
+}
+.navigator:hover{
+  background-color: rgb(226, 226, 226);
+}
+// responsive design
+@media(max-width: 1000px){
+  .main{
+    display: grid;
+  }
+}

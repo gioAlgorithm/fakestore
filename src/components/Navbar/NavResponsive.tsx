@@ -25,11 +25,11 @@ export default function NavResponsive() {
   }
 
   // outside click logic
-  const menuRef: any = useRef(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let handler = (e: any) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+    let handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setShow(false);
       }
     };

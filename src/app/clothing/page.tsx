@@ -1,9 +1,9 @@
 import React from 'react'
 import style from "./clothing.module.scss"
-import MenContainer from './menContainer'
-import WomenContainer from './womenContainer'
 import type { Metadata } from 'next'
-import ClothingHeader from './ClothingHeader/ClothingHeader'
+import { fetchByCategory } from '@/utils/fetchByCategory'
+import ClothingHeader from './_components/ClothingHeader/ClothingHeader'
+import ClothingContent from './_components/ClothingContent/ClothingContent'
 
 export const metadata: Metadata = {
   title: 'Clothing',
@@ -11,26 +11,14 @@ export const metadata: Metadata = {
 }
 
 
-export default function jewelry() {
-  
+export default async function jewelry() {
+  const womenData = await fetchByCategory(`women's clothing`);
+  const menData = await fetchByCategory(`men's clothing`);
 
   return (
     <main className={style.clothing}>
       <ClothingHeader />
-      <div className={style.innerMain}>
-        <div className={style.categoryName}>
-          <h1>Men&apos;s Clothing</h1>
-        </div>
-        <div className={style.cardContainer}>
-          <MenContainer />
-        </div>
-        <div className={style.categoryName}>
-          <h1>Women&apos;s Clothing</h1>
-        </div>
-        <div className={style.cardContainer}>
-          <WomenContainer />
-        </div>
-      </div>
+      <ClothingContent womenData={womenData} menData={menData} />
     </main>
   )
 }

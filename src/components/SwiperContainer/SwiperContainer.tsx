@@ -48,7 +48,6 @@ const SwiperContainer = () => {
         navigation={true}
         modules={[Pagination, Navigation]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        onSlideChange={() => console.log('slide change')}
       >
         <SwiperSlide>
           <div className={style.swiperImage} style={{ backgroundImage: `url(${fashionImage.src})` }}>
