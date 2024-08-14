@@ -1,15 +1,23 @@
 "use client";
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useRef, useEffect, useState, useContext, ChangeEvent } from "react";
 import { CartContext } from "@/context/CartItems";
 import style from "./Search.module.scss";
-import { AiOutlineSearch } from "react-icons/ai";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineArrowLeft } from "react-icons/ai";
 import SearchCard from "@/components/SearchCard/SearchCard";
 import { StyleContext } from "@/context/StyleContext";
 import { usePathname } from "next/navigation";
 
+interface Data {
+  id: number;
+  title: string;
+  price: number;
+  category: string;
+  description: string;
+  image: string;
+}
+
 interface Props {
-  data: any;
+  data: Data[];
 }
 
 export default function Search({ data }: Props) {
@@ -25,7 +33,7 @@ export default function Search({ data }: Props) {
   // drop-down menu div whenever the user types 2 or more characters in input
   const [showMenu, setShowMenu] = useState(false);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     if (inputValue.length >= 2) {
       setShowMenu(true);
@@ -42,18 +50,18 @@ export default function Search({ data }: Props) {
   };
 
   // handle focus
-  const searchRef = useRef<HTMLDivElement | any>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const handleFocus = () => {
-    searchRef.current.parentElement.classList.add("focus");
+    searchRef.current?.parentElement?.classList.add("focus");
   };
 
   // detecting outside click
-  const menuRef: any = useRef(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let handler = (event: any) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    let handler = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowSearch(false);
         setHideLogo(true);
       }
@@ -83,51 +91,51 @@ export default function Search({ data }: Props) {
           <AiOutlineSearch />
         </button>
       )}
-      {showSearch && (
-        <div className={style.search} ref={menuRef}>
-          <button className={style.close} onClick={handleClose}>
-            <AiOutlineArrowLeft />
-          </button>
-          <div className={style.innerSearch} onFocus={handleFocus}>
-            <input
-              ref={searchRef}
-              type="text"
-              onChange={handleChange}
-              value={text}
-              placeholder="Search Store"
-            />
-            <AiOutlineSearch />
-          </div>
-          {showMenu && (
-            <div className={style.searchMenu}>
-              {data
-                .filter((product: any) =>
-                  product.title.toLowerCase().startsWith(query)
-                )
-                .slice(0, 5)
-                .map((product: any) => {
-                  return (
-                    <SearchCard
-                      key={product.id}
-                      id={product.id}
-                      image={product.image}
-                      title={product.title}
-                      price={product.price}
-                      category={product.category}
-                      setShowMenu={setShowMenu}
-                      setText={setText}
-                    />
-                  );
-                })}
-              {data.filter((product: any) =>
-                product.title.toLowerCase().startsWith(query)
-              ).length === 0 && (
-                <div className={style.noData}>No matching Products found.</div>
-              )}
-            </div>
-          )}
+
+      <div className={`${style.search} ${showSearch ? style.show : style.hide}`} ref={menuRef}>
+        <button className={style.close} onClick={handleClose}>
+          <AiOutlineArrowLeft />
+        </button>
+        <div className={style.innerSearch} onFocus={handleFocus}>
+          <input
+            ref={searchRef}
+            type="text"
+            onChange={handleChange}
+            value={text}
+            placeholder="Search Store"
+          />
+          <AiOutlineSearch />
         </div>
-      )}
+        {showMenu && showSearch && (
+          <div className={style.searchMenu}>
+            {data
+              .filter((product: Data) =>
+                product.title.toLowerCase().startsWith(query)
+              )
+              .slice(0, 5)
+              .map((product: Data) => {
+                return (
+                  <SearchCard
+                    key={product.id}
+                    id={product.id}
+                    image={product.image}
+                    title={product.title}
+                    price={product.price}
+                    category={product.category}
+                    setShowMenu={setShowMenu}
+                    setText={setText}
+                    setShowSearch={setShowSearch}
+                  />
+                );
+              })}
+            {data.filter((product: Data) =>
+              product.title.toLowerCase().startsWith(query)
+            ).length === 0 && (
+              <div className={style.noData}>No matching Products found.</div>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 }
