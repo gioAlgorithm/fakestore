@@ -236,8 +236,11 @@
   }
   // checkout styles
   .checkOut{
+    position: sticky;
+    top: 100px;
     width: 29%;
     margin-top: 10px;
+    height: fit-content;
 
     .priceAndTax{
       display: flex;
