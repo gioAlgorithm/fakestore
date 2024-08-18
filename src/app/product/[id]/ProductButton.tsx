@@ -1,7 +1,7 @@
 "use client"
-import React, {useContext} from 'react'
+import React from 'react'
 import style from "./product.module.scss"
-import { CartContext } from '@/context/CartItems'
+import { useCartStore } from '@/context/CartItems'
 
 interface Props{
   product: any
@@ -10,7 +10,7 @@ interface Props{
 export default function ProductButton({product}: Props) {
 
   //importing usecontext
-  const {cartItems, setCartItems} = useContext(CartContext)
+  const {cartItems, setCartItems} = useCartStore();
   // Function that adds items to the cart
   const onAdd = () => {
     const exist = cartItems.find((x) => x.id === product.id);

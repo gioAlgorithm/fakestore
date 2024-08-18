@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState, useContext, ChangeEvent } from "react";
-import { CartContext } from "@/context/CartItems";
+import { useCartStore } from "@/context/CartItems";
 import style from "./Search.module.scss";
 import { AiOutlineSearch, AiOutlineArrowLeft } from "react-icons/ai";
 import SearchCard from "@/components/SearchCard/SearchCard";
@@ -23,7 +23,7 @@ interface Props {
 export default function Search({ data }: Props) {
   // show search
   const [showSearch, setShowSearch] = useState(false);
-  const { setHideLogo } = useContext(CartContext);
+  const { setHideLogo } = useCartStore();
   const { isSticky } = useContext(StyleContext);
   const router = usePathname();
 

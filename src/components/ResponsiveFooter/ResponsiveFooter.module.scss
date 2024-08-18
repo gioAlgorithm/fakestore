@@ -24,6 +24,24 @@
 .navigator:hover{
   background-color: rgb(226, 226, 226);
 }
+
+.quantityCircle {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  font-size: 0.8rem;
+  padding-bottom: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(32, 30, 29);
+  color: white;
+  margin-top: -20px;
+  margin-left: 20px;
+  user-select: none;
+  pointer-events: none;
+}
 // responsive design
 @media(max-width: 1000px){
   .main{

@@ -1,11 +1,11 @@
 "use client";
 import style from "./Logo.module.scss";
 import Link from "next/link";
-import React, { useContext } from "react";
-import { CartContext } from "@/context/CartItems";
+import React from "react";
+import { useCartStore } from "@/context/CartItems";
 
 export default function Logo() {
-  const { hideLogo } = useContext(CartContext);
+  const { hideLogo } = useCartStore();
 
   return (
     <>

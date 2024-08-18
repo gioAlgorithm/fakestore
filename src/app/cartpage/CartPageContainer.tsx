@@ -1,14 +1,14 @@
 "use client";
-import React, { useContext } from "react";
-import { CartContext } from "@/context/CartItems";
+import React, { useEffect, useState } from "react";
+import { useCartStore } from "@/context/CartItems";
 import style from "./cartpage.module.scss";
 import { CardProps } from "@/components/Card/Card";
 import { BsTrash } from "react-icons/bs";
-import Loading from "@/components/Loading";
 
 export default function CartPageContainer() {
   // Importing useContext
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useCartStore();
+  const [emptyCart, setEmptyCart] = useState(false);
 
   // Function that adds items inside the cart
   const onAdd = (event: React.MouseEvent<HTMLDivElement>, item: CardProps) => {
@@ -83,62 +83,66 @@ export default function CartPageContainer() {
   const tax = parseFloat(calculateTax(totalPrice));
   const totalPriceWithTax = calculateTotalPriceWithTax(totalPrice, tax);
 
-  if (cartItems === undefined) {
-    return <Loading />;
-  }
+  // check if the cart is empty
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      setEmptyCart(true);
+    }
+    
+  }, [cartItems]);
 
   return (
     <div className={style.cartPageContainer}>
       <div className={style.cartItemsHolder}>
-        {cartItems && cartItems.length > 0 ? (
-          cartItems.map((item) => {
-            if (!item || !item.title) {
-              return null; // Skip rendering if item or item.title is undefined
-            }
+        {cartItems && cartItems.length > 0
+          ? cartItems.map((item) => {
+              if (!item || !item.title) {
+                return null; // Skip rendering if item or item.title is undefined
+              }
 
-            return (
-              <div key={item.id} className={style.cartCard}>
-                <div className={style.cardInfo}>
-                  <div
-                    className={style.cartCardImage}
-                    style={{ backgroundImage: `url(${item.image})` }}
-                  ></div>
-                  <div className={style.titleAndPrice}>
-                    <h4 className={style.cardTitle}>{item.title}</h4>
-                    <h4>${((item.price || 0) * (item.qty || 0)).toFixed(2)}</h4>
+              return (
+                <div key={item.id} className={style.cartCard}>
+                  <div className={style.cardInfo}>
+                    <div
+                      className={style.cartCardImage}
+                      style={{ backgroundImage: `url(${item.image})` }}
+                    ></div>
+                    <div className={style.titleAndPrice}>
+                      <h4 className={style.cardTitle}>{item.title}</h4>
+                      <h4>
+                        ${((item.price || 0) * (item.qty || 0)).toFixed(2)}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className={style.trashIncrease}>
+                    <div className={style.trash} onClick={() => onTrash(item)}>
+                      <BsTrash />
+                    </div>
+                    <div className={style.cartIncrease}>
+                      <div
+                        className={style.minus}
+                        style={{ userSelect: "none" }}
+                        onClick={() => onRemove(item)}
+                      >
+                        <span>-</span>
+                      </div>
+                      <div className={style.quantity}>
+                        {item.qty}
+                        <div className={style.quantityAlert}>max item: 11</div>
+                      </div>
+                      <div
+                        className={style.plus}
+                        style={{ userSelect: "none" }}
+                        onClick={(event) => onAdd(event, item)}
+                      >
+                        <span>+</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className={style.trashIncrease}>
-                  <div className={style.trash} onClick={() => onTrash(item)}>
-                    <BsTrash />
-                  </div>
-                  <div className={style.cartIncrease}>
-                    <div
-                      className={style.minus}
-                      style={{ userSelect: "none" }}
-                      onClick={() => onRemove(item)}
-                    >
-                      <span>-</span>
-                    </div>
-                    <div className={style.quantity}>
-                      {item.qty}
-                      <div className={style.quantityAlert}>max item: 11</div>
-                    </div>
-                    <div
-                      className={style.plus}
-                      style={{ userSelect: "none" }}
-                      onClick={(event) => onAdd(event, item)}
-                    >
-                      <span>+</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className={style.emptyCart}>Cart is Empty</div>
-        )}
+              );
+            })
+          : emptyCart && <div className={style.emptyCart}>Cart is Empty</div>}
       </div>
       <div className={style.checkOut}>
         <div className={style.priceAndTax}>

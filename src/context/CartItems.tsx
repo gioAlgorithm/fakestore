@@ -1,43 +1,36 @@
 "use client";
-import { CardProps } from "@/components/Card";
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useRef } from "react";
+import { createCartStore, CartStore } from "@/store/cart-store";
+import { useStore } from "zustand";
 
-//interface for contextprovider which is going to be only child
-interface ContextProviderProps {
-  children: React.ReactNode;
+export type CartStoreApi = ReturnType<typeof createCartStore>
+
+export const CartContext = createContext<CartStoreApi | undefined>(undefined)
+
+interface CartProviderProps{
+  children: React.ReactNode
 }
 
-//interface for context
-interface ContextType {
-  cartItems: CardProps[];
-  setCartItems: React.Dispatch<React.SetStateAction<CardProps[]>>;
-  hideLogo: boolean;
-  setHideLogo: React.Dispatch<React.SetStateAction<boolean>>;
-}
+export const CartProvider = ({children}: CartProviderProps) =>{
+  const cartRef = useRef<CartStoreApi>()
+  if(!cartRef.current){
+    cartRef.current = createCartStore()
+  }
 
-//creating context
-export const CartContext = createContext<ContextType>({
-  cartItems: [],
-  setCartItems: () => {},
-  hideLogo: true,
-  setHideLogo: () => {},
-});
-
-export const CartProvider = ({ children }: ContextProviderProps) => {
-  // Initialize cartItems state with an empty array
-  const [cartItems, setCartItems] = useState<CardProps[]>([]);
-  const [hideLogo, setHideLogo] = useState(true);
-
-  return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        setCartItems,
-        hideLogo,
-        setHideLogo,
-      }}
-    >
+  return(
+    <CartContext.Provider value={cartRef.current}>
       {children}
     </CartContext.Provider>
-  );
-};
+  )
+}
+
+export const useCartStore = (): CartStore =>{
+  const cartStoreContext = useContext(CartContext);
+
+  if(!cartStoreContext){
+    throw new Error('useCartStore must be used within CartProvider')
+  }
+
+  return useStore(cartStoreContext, (state) => state)
+}
+

@@ -1,9 +1,9 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 import style from "./Card.module.scss";
 import Link from "next/link";
 import { LuShoppingCart } from "react-icons/lu";
-import { CartContext } from "@/context/CartItems";
+import { useCartStore } from "@/context/CartItems";
 
 export interface CardProps {
   key?: number;
@@ -17,7 +17,7 @@ export interface CardProps {
 
 export default function Card(props: CardProps) {
   //importing usecontext
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useCartStore();
 
   // Function that adds items inside the cart
   const onAdd = (event: React.MouseEvent<HTMLButtonElement>) => {

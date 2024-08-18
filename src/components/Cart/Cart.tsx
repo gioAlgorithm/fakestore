@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import style from "./Cart.module.scss";
 import { LuShoppingCart } from "react-icons/lu";
-import { CartContext } from "@/context/CartItems";
+import { useCartStore } from "@/context/CartItems";
 import { BsTrash } from "react-icons/bs";
 import { CardProps } from "@/components/Card/Card";
 import { usePathname } from "next/navigation";
@@ -13,7 +13,7 @@ import { StyleContext } from "@/context/StyleContext";
 export default function Cart() {
   const router = usePathname();
 
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useCartStore();
   const { isSticky } = useContext(StyleContext);
 
   // Function that adds items inside the cart
