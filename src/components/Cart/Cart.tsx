@@ -13,7 +13,7 @@ import { StyleContext } from "@/context/StyleContext";
 export default function Cart() {
   const router = usePathname();
 
-  const { cartItems, setCartItems, isClient } = useContext(CartContext);
+  const { cartItems, setCartItems } = useContext(CartContext);
   const { isSticky } = useContext(StyleContext);
 
   // Function that adds items inside the cart
@@ -22,11 +22,11 @@ export default function Cart() {
     const exist = cartItems.find((x) => x.id === item.id);
 
     if (exist) {
-      if (exist.qty < 11) {
-        // Check if the quantity is less than 10 before incrementing
+      if ((exist.qty || 0) < 11) {
+        // Check if the quantity is less than 11 before incrementing
         setCartItems(
           cartItems.map((x) =>
-            x.id === item.id ? { ...exist, qty: exist.qty + 1 } : x
+            x.id === item.id ? { ...exist, qty: (exist.qty || 0) + 1 } : x
           )
         );
       }
@@ -35,31 +35,45 @@ export default function Cart() {
     }
   };
 
-  // function that removes items
-  const onRemove = (Data: any) => {
+  // Function that removes items
+  const onRemove = (Data: CardProps) => {
     const exist = cartItems.find((x) => x.id === Data.id);
 
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.id !== Data.id));
-    } else {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === Data.id ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
+    if (exist && exist.id !== undefined) {
+      if ((exist.qty || 0) === 1) {
+        // Remove the item if quantity is 1
+        setCartItems(cartItems.filter((x) => x.id !== Data.id));
+      } else {
+        // Update the quantity of the item
+        setCartItems(
+          cartItems.map((x) =>
+            x.id === Data.id
+              ? {
+                  ...exist,
+                  qty: (exist.qty || 0) - 1, // Decrease quantity
+                  id: exist.id, // Ensure id is defined
+                  image: exist.image, // Ensure image is defined
+                  title: exist.title, // Ensure title is defined
+                  price: exist.price, // Ensure price is defined
+                  category: exist.category, // Ensure category is defined
+                }
+              : x
+          )
+        );
+      }
     }
   };
 
-  //remove the item no matter qty
+  // Remove the item no matter qty
   const onTrash = (item: CardProps) => {
     setCartItems(
       cartItems
         .map((x) => (x.id === item.id ? { ...x, qty: 0 } : x))
-        .filter((x) => x.qty > 0)
+        .filter((x) => x.qty! > 0)
     );
   };
 
-  // alert message when ordering
+  // Alert message when ordering
   const alertMessage = () => {
     alert("ORDERED!");
     setCartItems([]);
@@ -69,14 +83,14 @@ export default function Cart() {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     for (const item of cartItems) {
-      totalPrice += item.price * item.qty;
+      totalPrice += item.price * (item.qty || 0);
     }
     return totalPrice.toFixed(2); // Ensure the result is formatted to two decimal places
   };
 
-  // calculate total quantity
+  // Calculate total quantity
   const safeCartItems = cartItems || [];
-  const quantity = safeCartItems.reduce((a, q) => a + q.qty, 0);
+  const quantity = safeCartItems.reduce((a, q) => a + (q.qty || 0), 0);
 
   if (cartItems === undefined) {
     return <Loading />;
@@ -84,14 +98,13 @@ export default function Cart() {
 
   return (
     <div className={style.cart}>
-      {isClient && (
-        <Link href="/cartpage">
-          <LuShoppingCart
-            style={!isSticky && router === "/" ? { color: "white" } : {}}
-          />
-        </Link>
-      )}
-      {isClient && quantity != 0 && (
+      <Link href="/cartpage">
+        <LuShoppingCart
+          style={!isSticky && router === "/" ? { color: "white" } : {}}
+        />
+      </Link>
+
+      {quantity != 0 && (
         <Link
           href="/cartpage"
           style={
@@ -137,7 +150,7 @@ export default function Cart() {
                     ></div>
                     <div className={style.titleAndPrice}>
                       <h4>{truncatedTitle}</h4>
-                      <h4>${(item.price * item.qty).toFixed(2)}</h4>
+                      <h4>${(item.price * (item.qty || 0)).toFixed(2)}</h4>
                     </div>
                     <div className={style.trash} onClick={() => onTrash(item)}>
                       <BsTrash />
@@ -151,7 +164,7 @@ export default function Cart() {
                         <span>-</span>
                       </div>
                       <div className={style.quantity}>
-                        {item.qty}
+                        {item.qty || 0}
                         <div className={style.quantityAlert}>max item: 11</div>
                       </div>
                       <div

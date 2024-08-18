@@ -7,11 +7,12 @@ import { CartContext } from "@/context/CartItems";
 
 export interface CardProps {
   key?: number;
-  id?: number;
-  image?: string;
-  title?: string;
-  price?: number;
-  category?: string;
+  id: number;
+  image: string;
+  title: string;
+  price: number;
+  category: string;
+  qty?: number;
 }
 
 export default function Card(props: CardProps) {
@@ -23,11 +24,11 @@ export default function Card(props: CardProps) {
     event.preventDefault(); // Prevent link navigation
     const exist = cartItems.find((x) => x.id === props.id);
     if (exist) {
-      if (exist.qty < 11) {
+      if ((exist.qty || 0) < 11) {
         // Check if the quantity is less than 10 before incrementing
         setCartItems(
           cartItems.map((x) =>
-            x.id === props.id ? { ...exist, qty: exist.qty + 1 } : x
+            x.id === props.id ? { ...exist, qty: (exist.qty || 0) + 1 } : x
           )
         );
       }

@@ -1,18 +1,15 @@
-'use client'
-import { useContext } from 'react'
-import SortContainer from '../SortContainer'
-import styles from './ResponsiveSort.module.scss'
-import { SortContext } from '@/context/SortContext'
+"use client";
+import { useSortStore } from "@/context/SortContext";
+import SortContainer from "../SortContainer";
+import styles from "./ResponsiveSort.module.scss";
 
-interface Props {
-  
-}
+interface Props {}
 
 export default function ResponsiveSort(props: Props) {
-  const {showSort} = useContext(SortContext)
+  const { showSort } = useSortStore();
   return (
-    <div className={`${styles.container} ${showSort ? styles.active : ''}`}>
+    <div className={`${styles.container} ${showSort ? styles.active : ""}`}>
       <SortContainer />
     </div>
-  )
+  );
 }

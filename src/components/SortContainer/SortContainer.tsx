@@ -1,8 +1,8 @@
 "use client";
-import { SortContext } from "@/context/SortContext";
+import { useSortStore } from "@/context/SortContext";
 import styles from "./SortContainer.module.scss";
 import Slider from "@mui/material/Slider";
-import { useContext, useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { AiFillCheckSquare } from "react-icons/ai";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IoCloseSharp } from "react-icons/io5";
@@ -14,9 +14,9 @@ export default function SortContainer(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const {
+    setSort,
     minPrice,
     maxPrice,
-    setSort,
     setLoading,
     showSort,
     setShowSort,
@@ -24,7 +24,7 @@ export default function SortContainer(props: Props) {
     setSelected,
     sliderValues,
     setSliderValues,
-  } = useContext(SortContext);
+  } = useSortStore();
 
   // Update slider values when minPrice and maxPrice change
   useEffect(() => {

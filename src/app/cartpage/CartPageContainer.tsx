@@ -7,7 +7,7 @@ import { BsTrash } from "react-icons/bs";
 import Loading from "@/components/Loading";
 
 export default function CartPageContainer() {
-  //importing usecontext
+  // Importing useContext
   const { cartItems, setCartItems } = useContext(CartContext);
 
   // Function that adds items inside the cart
@@ -16,11 +16,11 @@ export default function CartPageContainer() {
     const exist = cartItems.find((x) => x.id === item.id);
 
     if (exist) {
-      if (exist.qty < 11) {
-        // Check if the quantity is less than 10 before incrementing
+      if ((exist.qty || 0) < 11) {
+        // Check if the quantity is less than 11 before incrementing
         setCartItems(
           cartItems.map((x) =>
-            x.id === item.id ? { ...exist, qty: exist.qty + 1 } : x
+            x.id === item.id ? { ...exist, qty: (exist.qty || 0) + 1 } : x
           )
         );
       }
@@ -29,45 +29,41 @@ export default function CartPageContainer() {
     }
   };
 
-  // function that removes items
+  // Function that removes items
   const onRemove = (Data: CardProps) => {
     const exist = cartItems.find((x) => x.id === Data.id);
 
-    if (exist.qty === 1) {
+    if (exist && (exist.qty || 0) === 1) {
       setCartItems(cartItems.filter((x) => x.id !== Data.id));
-    } else {
+    } else if (exist) {
       setCartItems(
         cartItems.map((x) =>
-          x.id === Data.id ? { ...exist, qty: exist.qty - 1 } : x
+          x.id === Data.id ? { ...exist, qty: (exist.qty || 0) - 1 } : x
         )
       );
     }
   };
 
-  //remove the item no matter qty
+  // Function that removes the item no matter the quantity
   const onTrash = (item: CardProps) => {
-    setCartItems(
-      cartItems
-        .map((x) => (x.id === item.id ? { ...x, qty: 0 } : x))
-        .filter((x) => x.qty > 0)
-    );
+    setCartItems(cartItems.filter((x) => x.id !== item.id));
   };
 
-  // alert message when ordering
+  // Alert message when ordering
   const alertMessage = () => {
     alert("ORDERED!");
-    setCartItems([]);
+    setCartItems([]); // Clear cart after ordering
   };
 
   // Calculate the total price of items in the cart
   const calculateTotalPrice = () => {
-    if (!cartItems) {
-      return "0.00"; // Handle the case when cartItems is not yet defined
+    if (!cartItems || cartItems.length === 0) {
+      return "0.00"; // Handle the case when cartItems is not defined or empty
     }
 
     let totalPrice: number = 0;
     for (const item of cartItems) {
-      totalPrice += item.price * item.qty;
+      totalPrice += (item.price || 0) * (item.qty || 0); // Ensure price and qty are defined
     }
     return totalPrice.toFixed(2);
   };
@@ -77,18 +73,15 @@ export default function CartPageContainer() {
     return (totalPrice * 0.05).toFixed(2);
   };
 
-  // Calculate the total price with tax
+  // Calculate the total price including tax
   const calculateTotalPriceWithTax = (totalPrice: number, tax: number) => {
-    return (totalPrice - tax).toFixed(2);
+    return (totalPrice + tax).toFixed(2);
   };
 
-  // Calculate the total price, tax, and total price with tax
-  const totalPrice = calculateTotalPrice();
-  const tax = calculateTax(parseFloat(totalPrice));
-  const totalPriceWithTax = calculateTotalPriceWithTax(
-    parseFloat(totalPrice),
-    parseFloat(tax)
-  );
+  // Calculate total price, tax, and total price including tax
+  const totalPrice = parseFloat(calculateTotalPrice());
+  const tax = parseFloat(calculateTax(totalPrice));
+  const totalPriceWithTax = calculateTotalPriceWithTax(totalPrice, tax);
 
   if (cartItems === undefined) {
     return <Loading />;
@@ -112,7 +105,7 @@ export default function CartPageContainer() {
                   ></div>
                   <div className={style.titleAndPrice}>
                     <h4 className={style.cardTitle}>{item.title}</h4>
-                    <h4>${(item.price * item.qty).toFixed(2)}</h4>
+                    <h4>${((item.price || 0) * (item.qty || 0)).toFixed(2)}</h4>
                   </div>
                 </div>
                 <div className={style.trashIncrease}>
@@ -155,13 +148,13 @@ export default function CartPageContainer() {
           </div>
           <div className={style.tax}>
             <h2>Tax 5%</h2>
-            <h3>${tax}</h3>
+            <h3>${tax.toFixed(2)}</h3>
           </div>
         </div>
         <div className={style.totalPrice}>
           <div className={style.totalPriceInfo}>
             <h2>Total Price</h2>
-            <h3>${totalPrice}</h3>
+            <h3>${totalPrice.toFixed(2)}</h3>
           </div>
         </div>
         <button className={style.orderButton} onClick={alertMessage}>

@@ -1,51 +1,40 @@
-"use client"
-import React, {createContext, useState, useEffect} from "react"
+"use client";
+import { CardProps } from "@/components/Card";
+import React, { createContext, useState } from "react";
 
 //interface for contextprovider which is going to be only child
-interface ContextProviderProps{
-  children: React.ReactNode
+interface ContextProviderProps {
+  children: React.ReactNode;
 }
 
 //interface for context
-interface ContextType{
-  cartItems: any[]
-  setCartItems: React.Dispatch<React.SetStateAction<any[]>>
-  isClient: boolean
-  setIsClient: React.Dispatch<React.SetStateAction<boolean>>
-  hideLogo: boolean
-  setHideLogo: React.Dispatch<React.SetStateAction<boolean>>
+interface ContextType {
+  cartItems: CardProps[];
+  setCartItems: React.Dispatch<React.SetStateAction<CardProps[]>>;
+  hideLogo: boolean;
+  setHideLogo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 //creating context
 export const CartContext = createContext<ContextType>({
   cartItems: [],
-  setCartItems: ()=> {},
-  isClient: false,
-  setIsClient: ()=> {},
+  setCartItems: () => {},
   hideLogo: true,
-  setHideLogo: ()=> {}
-})
-
+  setHideLogo: () => {},
+});
 
 export const CartProvider = ({ children }: ContextProviderProps) => {
   // Initialize cartItems state with an empty array
-  const [cartItems, setCartItems] = useState<any[]>([]);
-  const [isClient, setIsClient] = useState(false);
+  const [cartItems, setCartItems] = useState<CardProps[]>([]);
   const [hideLogo, setHideLogo] = useState(true);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
         setCartItems,
-        isClient,
-        setIsClient,
-        hideLogo, 
-        setHideLogo
+        hideLogo,
+        setHideLogo,
       }}
     >
       {children}

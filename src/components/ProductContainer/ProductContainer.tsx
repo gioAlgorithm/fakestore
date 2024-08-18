@@ -1,8 +1,8 @@
 "use client";
+import { useSortStore } from "@/context/SortContext";
 import Card from "@/components/Card/Card";
 import styles from "./ProductContainer.module.scss";
-import { useContext, useEffect, useState } from "react";
-import { SortContext } from "@/context/SortContext";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Loading from "../Loading";
 
@@ -21,7 +21,11 @@ interface Props {
 
 export default function ProductContainer(props: Props) {
   const { data } = props;
-  const { setMaxPrice, loading, setLoading } = useContext(SortContext);
+  const {
+    setMaxPrice,
+    loading,
+    setLoading,
+  } = useSortStore();
   const searchParams = useSearchParams();
   const [filteredData, setFilteredData] = useState<Product[]>([]);
   const [zeroItems, setZeroItems] = useState(false)
