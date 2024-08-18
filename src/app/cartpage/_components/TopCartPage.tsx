@@ -1,6 +1,6 @@
 "use client"
 import React, {useContext} from 'react'
-import style from "./cartpage.module.scss"
+import style from "../cartpage.module.scss"
 import { BsTrash } from "react-icons/bs";
 import { CartContext } from '@/context/CartItems';
 
