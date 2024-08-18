@@ -1,7 +1,7 @@
 import React from 'react'
 import style from "./cartpage.module.scss"
 import CartPageContainer from './CartPageContainer';
-import TopCartPage from './TopCartPage';
+import TopCartPage from './_components/TopCartPage';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

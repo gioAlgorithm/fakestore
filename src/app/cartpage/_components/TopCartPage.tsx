@@ -12,7 +12,7 @@ export default function TopCartPage() {
   
   // calculate total quantity
   const safeCartItems = cartItems || []
-  const quantity = safeCartItems.reduce((a, q) => a + q.qty, 0)
+  const quantity = safeCartItems.reduce((a, q) => a + (q.qty || 0), 0)
 
   const handleClear = ()=>{
     setCartItems([])
