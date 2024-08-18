@@ -66,10 +66,11 @@
   box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   z-index: 9999;
+
   &.responsiveMenuActive {
     visibility: visible;
     transform: translateX(0);
@@ -127,5 +128,8 @@
         display: none;
       }
     }
+  }
+  .responsiveMenu {
+    display: flex;
   }
 }
