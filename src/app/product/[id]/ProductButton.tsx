@@ -15,11 +15,11 @@ export default function ProductButton({product}: Props) {
   const onAdd = () => {
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist) {
-      if (exist.qty < 11) {
+      if ((exist.qty || 0) < 11) {
         // Check if the quantity is less than 10 before incrementing
         setCartItems(
           cartItems.map((x) =>
-            x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+            x.id === product.id ? { ...exist, qty: (exist.qty || 0) + 1 } : x
           )
         );
       }
