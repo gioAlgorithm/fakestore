@@ -2,12 +2,12 @@
 import React, {useContext} from 'react'
 import style from "../cartpage.module.scss"
 import { BsTrash } from "react-icons/bs";
-import { CartContext } from '@/context/CartItems';
+import { CartContext, useCartStore } from '@/context/CartItems';
 
 export default function TopCartPage() {
 
   //importing usecontext
-  const {cartItems, setCartItems} = useContext(CartContext)
+  const {cartItems, setCartItems} = useCartStore()
 
   
   // calculate total quantity
