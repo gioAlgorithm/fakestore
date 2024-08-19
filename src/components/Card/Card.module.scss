@@ -88,3 +88,12 @@
     }
   }
 }
+@media(max-width: 1000px){
+  .card{
+    .cardInfo{
+      .addCart{
+        display: flex;
+      }
+    }
+  }
+}
